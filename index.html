@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字神探</title>
+    <style>
+        body {
+            font-family: '微软雅黑', sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 80%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #07c160;
+            border-radius: 25px;
+            margin: 15px 0;
+        }
+        button {
+            background: #07c160;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .share-btn {
+            background: #ffc107;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 数字神探</h1>
+        <p>猜猜1-100之间的神秘数字是几？</p>
+        <input type="number" id="guessInput" placeholder="输入你的猜测">
+        <button onclick="checkGuess()">提交</button>
+        <div id="result"></div>
+        <button class="share-btn" onclick="shareResult()" style="display:none;">
+            🎉 分享战绩
+        </button>
+    </div>
+
+    <script>
+        let targetNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            const resultDiv = document.getElementById('result');
+            
+            if(isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                resultDiv.innerHTML = "⚠️ 请输入1-100之间的数字！";
+                return;
+            }
+
+            attempts++;
+            
+            if(userGuess === targetNumber) {
+                resultDiv.innerHTML = `🎉 恭喜！你在第${attempts}次猜中了！`;
+                document.querySelector('.share-btn').style.display = 'block';
+            } else if(userGuess < targetNumber) {
+                resultDiv.innerHTML = "📈 太小了，再试试看！";
+            } else {
+                resultDiv.innerHTML = "📉 太大了，继续加油！";
+            }
+        }
+
+        function shareResult() {
+            // 微信分享功能需要接入JS-SDK，此处简化处理
+            alert("🎮 我在【数字神探】用了" + attempts + "次就猜中了！你也来试试吧~");
+        }
+    </script>
+</body>
+</html>
